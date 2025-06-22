@@ -1,0 +1,30 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Cambia 'main' con il nome del tuo branch principale (es. master)
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Se la tua app Emergent ha un processo di build (es. npm install, npm run build)
+      # decommenta e adatta i seguenti passi
+      # - name: Install dependencies
+      #   run: npm install
+      # - name: Build project
+      #   run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/public # <--- Questa è la riga cruciale! Specifica la tua cartella
+          # Nota: se la tua build crea una cartella di output dentro frontend/public, ad es. frontend/public/dist
+          # allora dovresti specificare publish_dir: ./frontend/public/dist
